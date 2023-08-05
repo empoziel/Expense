@@ -6,4 +6,4 @@
 
 ### Project GIF
 
-- will be added end of the project
+![](project.gif)

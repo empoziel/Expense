@@ -6,10 +6,15 @@ const listArea = document.getElementById("list");
 const statusCheckbox = document.getElementById("status-check");
 const sumInfo = document.getElementById("sum-info");
 const deleteBtn = document.getElementById("delete");
+const userInput = document.getElementById("user-input");
+const select = document.querySelector("select");
 
 //watching event
 addBtn.addEventListener("click", addExpense);
 listArea.addEventListener("click", handleUpdate);
+userInput.addEventListener("input", saveUser);
+document.addEventListener("DOMContentLoaded", getUser);
+select.addEventListener("change", handleFilter);
 
 //keep sum value here
 let sum = 0;
@@ -71,11 +76,63 @@ function addExpense(event) {
 function handleUpdate(e) {
   const ele = e.target;
 
+  //access to container
+  const parent = ele.parentElement.parentElement;
+
   //works just for delete
   if (ele.id === "delete") {
-    //access to container
-    const parent = ele.parentElement.parentElement;
     //delete element
     parent.remove();
+
+    // update sum value
+    const price = parent.querySelector(".price").textContent;
+
+    updateSum(Number(price) * -1);
   }
+
+  // if element id is 'edit' payed , reverse class
+  if (ele.id === "edit") {
+    parent.classList.toggle("payed");
+  }
+}
+
+//Save user to local
+function saveUser(e) {
+  localStorage.setItem("username", e.target.value);
+}
+
+//if username is added to localstorage
+function getUser() {
+  //get username from local -- print '' if name empty
+  const username = localStorage.getItem("username") || "";
+
+  userInput.value = username;
+}
+
+function handleFilter(e) {
+  const selected = e.target.value;
+  const items = list.childNodes;
+
+  items.forEach((item) => {
+    //watch the selected values
+    switch (selected) {
+      case "all":
+        item.style.display = "flex";
+        break;
+      case "payed":
+        if (item.classList.contains("payed")) {
+          item.style.display = "flex";
+        } else {
+          item.style.display = "none";
+        }
+        break;
+      case "not-payed":
+        if (!item.classList.contains("payed")) {
+          item.style.display = "flex";
+        } else {
+          item.style.display = "none";
+        }
+        break;
+    }
+  });
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expense Calculator</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -12,7 +13,7 @@
       <!--welcome sec-->
       <h3 class="greet">
         Welcome,
-        <input type="text" placeholder="enter your name..." />
+        <input id="user-input" type="text" placeholder="enter your name..." />
       </h3>
 
       <!--form area-->
@@ -43,6 +44,13 @@
       <div class="sum">
         Total Expenditure <span id="sum-info">0</span> &#8378;
       </div>
+
+      <!--filter area-->
+      <select>
+        <option value="all">All</option>
+        <option value="payed">Payed</option>
+        <option value="not-payed">Not-Payed</option>
+      </select>
 
       <!--expense list-->
       <div id="list"></div>
